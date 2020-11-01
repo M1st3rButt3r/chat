@@ -1,71 +1,53 @@
 const express = require('express')
-const app = express()
+const router = express.Router();
+const database = require('../includes/database')
 const bcrypt = require('bcrypt')
-const mysql = require('mysql')
-const { v4 : uuidv4 } =  require('uuid');
+const jwt = require('jsonwebtoken')
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "chat"
-})
-
-connection.connect(function(err) {
-    if(err) throw err
-    else console.log("Connected")
-})
-
-const users = []
-
-app.set('view-engine', 'ejs')
-app.use(express.urlencoded({extended: false}))
-
-app.get('/', (req, res) => {
-    res.render('index.ejs')
-})
-
-app.get('/signin', (req, res) => {
-    res.render('signin.ejs');
-})
-
-app.get('/signup', (req, res) => {
+router.get('/', (req, res) => {
+    if(req.user)
+    {
+        res.redirect('/')
+        return 
+    }
     res.render('signup.ejs')
-})
-
-app.post('/signin', (req, res) => {
-
+    return 
 })
 
 //handle post requests to directory /signup
-app.post('/signup', async (req, res) => {
+router.post('/', async (req, res) => {
+
+    //if logged in redirect
+    if(req.user)
+    {
+        res.redirect('/')
+        return 
+    }
 
     //check if password and password repeat are equal
     if(req.body.password !== req.body.passwordrepeat) {
         res.redirect('/signup');
-        console.log("passworrds are not equal");
         return;
     }
     //check if password is long enough
     else if(req.body.password.length < 8) {
         res.redirect('/signup');
-        console.log("not long enough");
-        return;
+        return
     }
-    var tag = 0;
+
     //generate the tag
+    var tag = 0;
+
     var sql = 'SELECT * FROM user WHERE name="'+req.body.name+'"'
-    connection.query(sql, function(err, result) {
+    database.connection.query(sql, (err, result) => {
         if(err) throw err
         else 
         {
             tag = result.length
-            console.log(tag);
 
-            if(tag > 9999)
+            if(tag > 8999)
             {
                 res.redirect('/signup')
-                console.log("username taken")
                 return;
                 
             }
@@ -81,9 +63,8 @@ app.post('/signup', async (req, res) => {
     try{
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         var sql = 'INSERT INTO user (name, tag, password) VALUES ("'+req.body.name+'","'+tag+'","'+hashedPassword+'")'
-        connection.query(sql, function(err, result) {
+        database.connection.query(sql, function(err, result) {
             if(err) throw err
-            else console.log("Inserted user")
         })
         res.redirect('/signin')
     } catch(err) {
@@ -92,4 +73,4 @@ app.post('/signup', async (req, res) => {
     }
 })
 
-app.listen(3000)
+module.exports = router

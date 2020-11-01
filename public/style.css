@@ -1,0 +1,49 @@
+.form-signin {
+    margin-top: 35vh;
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.signin-button {
+    margin: 15px;
+    margin-right: 10px;
+    margin-left: 0;
+}
+
+body {
+    background-color: #1e272e !important;
+}
+
+.custom-control-label {
+    color: whitesmoke;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #05c46b;
+    background-color: #05c46b;
+  }
+
+  .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #05c46b !important;
+    border-color: #05c46b !important;
+}
+
+.sidebar {
+    background-color: #303d47 !important;
+    height: 100%;
+    width: 300px;
+    display: block;
+    position: fixed;
+}
+
+.friendslist {
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
+}
+
+.character-panel {
+    height: 70px;
+}
