@@ -13,6 +13,7 @@ const requested = require('./routes/api/requested')
 const block = require('./routes/api/block')
 const unblock = require('./routes/api/unblock')
 const deleteRelation = require('./routes/api/deleteRelation')
+const request = require('./routes/api/request')
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
@@ -61,6 +62,7 @@ app.use('/requested', requested)
 app.use('/block', block)
 app.use('/unblock', unblock)
 app.use('/deleteRelation', deleteRelation)
+app.use('/request', request)
 
 
 app.listen(3001)
