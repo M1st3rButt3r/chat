@@ -20,7 +20,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next) {
     if(!req.cookies.token)
     {
-        res.header('Access-Control-Allow-Origin', "http://localhost:3000").header('Access-Control-Allow-Credentials', true).sendStatus(401)
+        console.log('hallo')
+        res.header('Access-Control-Allow-Credentials', true).header('Access-Control-Allow-Origin', "http://localhost:3000").sendStatus(500)
         return
     }
     jwt.verify(req.cookies.token, process.env.AUTHORIZATION_TOKEN, (err, user) =>{
@@ -41,6 +42,7 @@ app.use(function(req, res, next) {
         
         if(!result[0])
         {
+           
             res.header('Access-Control-Allow-Origin', "http://localhost:3000").header('Access-Control-Allow-Credentials', true).sendStatus(404)
             return
         }

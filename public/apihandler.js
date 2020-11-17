@@ -132,10 +132,13 @@ function generateRequestedListActionButtons()
 }
 
 //returns the action button for the incoming requests list
-function generateBlocksListActionButtons()
+function generateBlocksListActionButtons(id)
 {
     var actionsEntry = document.createElement('td')
     var dismissButton = document.createElement('button')
+    dismissButton.addEventListener('click', () =>{
+        
+    })
     dismissButton.innerHTML='<i class="fas fa-times"></i>'
     actionsEntry.appendChild(dismissButton)
 
@@ -143,12 +146,23 @@ function generateBlocksListActionButtons()
 }
 
 function block(id) {
-    fetch(apiUrl +'block?uuid='+id, {credentials: 'include', method: 'put'}).then((x)=>{
-        console.log('block')
-    }).catch((err)=>{
+    fetch(apiUrl +'block?uuid='+id, {credentials: 'include'})
+    .then((x)=> {
+        reloadAllLists()
+    })
+    .catch((err)=>{
         if(err) throw err
     })
-    reloadAllLists()
+}
+
+function unblock(id) {
+    fetch(apiUrl +'unblock?uuid='+id, {credentials: 'include'})
+    .then((x)=> {
+        reloadAllLists()
+    })
+    .catch((err)=>{
+        if(err) throw err
+    })
 }
 
 function call(id) {
@@ -165,3 +179,4 @@ function acceptRequest(id)
     console.log('Accept Request '+id)
     reloadAllLists()
 }
+

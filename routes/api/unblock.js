@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
         res.sendStatus(404)
         return
     }
-    //create block
+    //delete block
     var sql = 'DELETE FROM blocks WHERE uuida="'+req.user.id+'" AND uuidb="'+uuid+'"'
     database.connection.query(sql, (err) => {
         if(err) throw err
