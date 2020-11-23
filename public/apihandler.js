@@ -86,7 +86,7 @@ async function createTableEntry(id, actionButtonsFunction, menu)
         container.appendChild(tagHTML)
         nameEntry.appendChild(container)
         entry.appendChild(nameEntry)
-        entry.appendChild(actionButtonsFunction())
+        entry.appendChild(actionButtonsFunction(id))
 
         return entry
     })
@@ -96,7 +96,7 @@ async function createTableEntry(id, actionButtonsFunction, menu)
 }
 
 //returns the action button for the friends list
-function generateFriendsListActionButtons()
+function generateFriendsListActionButtons(id)
 {
     var actionsEntry = document.createElement('td')
     var button = document.createElement('button')
@@ -107,7 +107,7 @@ function generateFriendsListActionButtons()
 }
 
 //returns the action button for the incoming requests list
-function generateRequestsListActionButtons()
+function generateRequestsListActionButtons(id)
 {
     var actionsEntry = document.createElement('td')
     var acceptButton = document.createElement('button')
@@ -121,10 +121,14 @@ function generateRequestsListActionButtons()
 }
 
 //returns the action button for the incoming requests list
-function generateRequestedListActionButtons()
+function generateRequestedListActionButtons(id)
 {
     var actionsEntry = document.createElement('td')
     var dismissButton = document.createElement('button')
+    dismissButton.addEventListener('click', ()=>{
+        deleteRelation(id)
+    })
+
     dismissButton.innerHTML='<i class="fas fa-times"></i>'
     actionsEntry.appendChild(dismissButton)
 
@@ -135,12 +139,12 @@ function generateRequestedListActionButtons()
 function generateBlocksListActionButtons(id)
 {
     var actionsEntry = document.createElement('td')
-    var dismissButton = document.createElement('button')
-    dismissButton.addEventListener('click', () =>{
-        
+    var removeButton = document.createElement('button')
+    removeButton.addEventListener('click', () =>{
+        unblock(id);
     })
-    dismissButton.innerHTML='<i class="fas fa-times"></i>'
-    actionsEntry.appendChild(dismissButton)
+    removeButton.innerHTML='<i class="fas fa-times"></i>'
+    actionsEntry.appendChild(removeButton)
 
     return actionsEntry
 }
@@ -181,7 +185,11 @@ function deleteRelation(id) {
 
 function request(id)
 {
-    console.log('Accept Request '+id)
-    reloadAllLists()
+    fetch(apiUrl +'request?uuid='+id, {credentials: 'include'})
+    .then(()=> {
+        reloadAllLists()
+    })
+    .catch((err)=>{
+        if(err) throw err
+    })
 }
-
