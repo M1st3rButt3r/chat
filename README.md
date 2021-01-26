@@ -7,5 +7,30 @@ Das Ziel des Projektes ist es ein P2P Videochat Tool zu entwickeln, welches ohne
 Ich habe den Fehler des letzten Males, das die Socket.io Connection nicht funktioniert behoben, der Fehler lag darin, dass ich Client Seitig nicht die Socket.io Library eingebunden hatte, was nötig für das Funktionieren der Verbindung ist.
 
 ```javascript
-+ <script src="/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+```
+
+### 27.11.20
+Ich hatte das Problem, das ich beim Neuladen der Userlists (also Friends, Pending, Blocked) immer bevor das alte Ergebis gelöscht wurde ein kurzer Augenblick mit einer leeren Liste war. Das habe ich behoben in dem ich einen neuen Table Body erstellt haben, dem alle neuen Einträge angehängt, und danach den alten Table Body mit dem neuen ersetzt habe. 
+
+```javascript
+function loadRelationsList(url, tableid, actionButtonsFunction, menu)
+{
+    var entrys = [];
+    var tbody = document.createElement('tbody')
+    getRelations(url).then(async function(data){
+        for (let i = 0; i < data.length; i++) {
+            var entry = await createTableEntry(data[i], actionButtonsFunction, menu)
+            entrys.push(entry)
+        }
+        for (let i = 0; i < entrys.length; i++) {
+            tbody.appendChild(entrys[i])
+        }
+        var table = document.getElementById(tableid)
+        tbody.id = table.id
+        tbody.classList = table.classList
+        table.parentNode.replaceChild(tbody, table)
+    })
+
+}
 ```
