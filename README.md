@@ -5,7 +5,7 @@ Das Ziel des Projektes ist es ein P2P Videochat Tool zu entwickeln, welches ohne
 ## Tagebuch
 
 ### 09.02.21, 16.02.21
-Aktuell habe ich das Problem, das die PeerJS library nicht funktioniert, der Verbindungscode, sprich die IDs etc. werden richtig ziwschen den Clients hin und her geschickt, aber sobald man die PeerID des anderen für den Verbindungsaufbau verwendet gibt es keine weitere Reaktion.
+Aktuell habe ich das Problem, das die PeerJS library nicht funktioniert, der Verbindungscode, sprich die IDs etc. werden richtig ziwschen den Clients hin und her geschickt, aber sobald man die PeerID des anderen für den Verbindungsaufbau verwendet gibt es keine weitere Reaktion. Das Problem war, das ich schon beim aufrufen der Seite die PeerID mit in die Datenbank geschickt habe, dann der PeerClient seine ID vom Server allerdings noch nicht bekommen hatte, und so der Wert falsch war. Das habe ich behoben indem ich die PeerID zu begin des Anrufens schicke, das klappt.
 
 ### 09.02.21
 Heute hatte ich beim einbinden der Peerjs library ein clientseitigen Problem, bei dem die Klasse Peer nicht definiert war, meine erste Idee war, das die scripte in der falschen Reiheinfolge geladen werden also habe ich das geändert, danach gab es das Problem weiter, nachdem ich alles neugestartet habe, hat es wieder geklappt. Ich vermute das die Scripte falschrum eingelesen wurden, und das beim ersten Versuch nicht alles richtig geladen war.
