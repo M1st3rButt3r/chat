@@ -77,7 +77,7 @@ function requestFriend(uuid, req, res) {
                             //check if you are requested and change it or insert request
                             var sql = 'SELECT * FROM relations WHERE (uuidb="'+req.user.id+'" AND uuida="'+uuid+'") AND status="0"'
                             database.connection.query(sql, (err, result) => {
-                                if(err) throw err
+                                if(err) throw err;
 
                                 if(result.length > 0) {
                                     //change relation

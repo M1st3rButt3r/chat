@@ -12,7 +12,8 @@ const database = require('./includes/database');
 const signin = require('./routes/signin')
 const signup = require('./routes/signup')
 const index = require('./routes/index')
-const logout = require('./routes/logout')
+const logout = require('./routes/logout');
+const { data } = require('jquery');
 
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({extended: false}))
@@ -42,13 +43,29 @@ app.use(function(req, res, next)
 io.on('connection', (socket) => {
 
     socket.on("ready", (uuid) => {
-        console.log("User "+uuid+" connected with "+ socket.id);
-        var sql = "INSERT INTO clients (uuid, socketid) VALUES ('"+uuid+"', '"+socket.id+"')"
+        var sql = "INSERT INTO clients (uuid, socketid) VALUES ('"+uuid+"', '"+socket.id+"')";
         database.connection.query(sql);
-    })
+    });
+
+    socket.on("call", (id, peerid) => {
+        var sql = "SELECT * FROM clients WHERE uuid='"+id+"'";
+        database.connection.query(sql, (err, r0) => {
+            if(err) throw err;
+
+            var sql = "SELECT * FROM clients WHERE socketid='"+socket.id+"'";
+            database.connection.query(sql, (err, r1) => {
+                if(err) throw err;
+                
+                var callersId = r1[0].uuid;
+
+                r0.forEach(element => {
+                    io.to(element.socketid).emit("call", callersId, peerid);
+                });
+            });
+        });
+    });
 
     socket.on('disconnecting', () => {
-        console.log(socket.id+" disconnected");
         var sql = "DELETE FROM clients WHERE socketid = '"+socket.id+"'"
         database.connection.query(sql);
       });

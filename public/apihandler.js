@@ -21,6 +21,7 @@ async function getUserInfo(uuid) {
 
 }
 
+//every user panel is loaded
 async function loadUserPanels(nameClass, tagClass) {
     getUserInfo().then(data => {
         nameObjects = document.getElementsByClassName(nameClass);
@@ -161,6 +162,7 @@ function generateBlocksListActionButtons(id)
     return actionsEntry
 }
 
+//calls the api to block someone
 function block(id) {
     fetch(apiUrl +'block?uuid='+id, {credentials: 'include'})
     .then(()=> {
@@ -171,6 +173,7 @@ function block(id) {
     })
 }
 
+//calls the api to ublock someone
 function unblock(id) {
     fetch(apiUrl +'unblock?uuid='+id, {credentials: 'include'})
     .then(()=> {
@@ -181,10 +184,7 @@ function unblock(id) {
     })
 }
 
-function call(id) {
-    console.log('Call '+id)
-}
-
+//removes a Friend or a Friendrequest
 function deleteRelation(id) {
     fetch(apiUrl +'deleteRelation?uuid='+id, {credentials: 'include'})
     .then(()=> {
@@ -195,6 +195,7 @@ function deleteRelation(id) {
     })
 }
 
+//Requests someone
 function request(id) {
     fetch(apiUrl +'request?uuid='+id, {credentials: 'include'})
     .then(()=> {
@@ -205,6 +206,7 @@ function request(id) {
     })
 }
 
+//request someone over his name
 function requestWithName(name, tag) {
     fetch(apiUrl +'request?name='+name+'&tag='+tag, {credentials: 'include'})
     .then(()=> {

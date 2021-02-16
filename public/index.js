@@ -7,7 +7,7 @@ loadUserPanels("name", "tag");
 reloadAllLists().catch((err)=> {if(err) throw err});
 window.setInterval(function(){
     reloadAllLists().catch((err)=> {if(err) throw err});
-  }, 1000);
+}, 1000);
 
 
 async function reloadAllLists()
