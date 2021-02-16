@@ -3,6 +3,10 @@
 Das Ziel des Projektes ist es ein P2P Videochat Tool zu entwickeln, welches ohne jeglichen Speichern von Personenbezogenen Daten auskommt (Serverlog ausgenommen). Dazu wird ein Accountsystem mit anmelden sowie Neuerstellung eines Accounts geschaffen. Diese Accounts sollen sich über ihren Benutzernamen + Tag anfreunden können und so Videotelefonate starten können. Diese sollen über ein Raumsystem funktionieren. Für die Räume bracht man dementsprechend die richtige Berechtigung. Das Raumsystem soll es ermöglichen Später einfacher Gruppen hinzuzufügen, da diese Räume von sich aus mehr Teilnehmer als 2 erlauben. Des Weiteren soll sofern die Zeit bleibt an einer Desktop Version gearbeitet werden, und ein P2P Chat Tool erstellt werden.
 
 ## Tagebuch
+
+### 09.02.21, 16.02.21
+Aktuell habe ich das Problem, das die PeerJS library nicht funktioniert, der Verbindungscode, sprich die IDs etc. werden richtig ziwschen den Clients hin und her geschickt, aber sobald man die PeerID des anderen für den Verbindungsaufbau verwendet gibt es keine weitere Reaktion.
+
 ### 09.02.21
 Heute hatte ich beim einbinden der Peerjs library ein clientseitigen Problem, bei dem die Klasse Peer nicht definiert war, meine erste Idee war, das die scripte in der falschen Reiheinfolge geladen werden also habe ich das geändert, danach gab es das Problem weiter, nachdem ich alles neugestartet habe, hat es wieder geklappt. Ich vermute das die Scripte falschrum eingelesen wurden, und das beim ersten Versuch nicht alles richtig geladen war.
 
@@ -43,3 +47,4 @@ function loadRelationsList(url, tableid, actionButtonsFunction, menu)
 
 }
 ``` 
+
